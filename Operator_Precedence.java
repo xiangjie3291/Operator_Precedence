@@ -1,3 +1,5 @@
+import com.sun.rowset.internal.SyncResolverImpl;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -33,7 +35,7 @@ public class Operator_Precedence {
     private static Set<Character> Vn = new LinkedHashSet<Character>(){
         {
             add('N');
-            //add('E');add('T');add('F');
+            //  add('E');add('T');add('F');
         }
     };
     /* 优先关系矩阵 */
@@ -53,6 +55,7 @@ public class Operator_Precedence {
         for(int i=start;i<a.size();i++){
             str.append(a.get(i));
         }
+        //System.out.println("规约："+str);
         for (Map.Entry<Character, List<String>> map : grammar.entrySet()){
             for(String get: map.getValue()){
                 if(!get.equals(str.toString())){
@@ -95,7 +98,7 @@ public class Operator_Precedence {
                     }else{
                         j=j-2;
                     }
-                }while (matrix.get(SymbolStack.get(j).toString()+Q)=='>');
+                }while (matrix.get(SymbolStack.get(j).toString()+Q)=='>'||matrix.get(SymbolStack.get(j).toString()+Q)=='=');
                 /*规约*/
                 char N=reduce(j+1, SymbolStack);
                 if (N==0){
@@ -104,11 +107,14 @@ public class Operator_Precedence {
                     break;
                 }else {
                     System.out.println("R");
+                    k=j+1;
+                    SymbolStack=SymbolStack.subList(0, k);
+                    SymbolStack.add(N);
+                  //  System.out.println(SymbolStack.toString());
                 }
-                k=j+1;
-                SymbolStack.set(k,N);
+
             }
-            if(SymbolStack.get(j)=='#'&&a=='#'){
+            if((SymbolStack.get(j)=='#'&&a=='#')||flag==1){
                 break;
             }
             if((matrix.get(SymbolStack.get(j).toString()+a)=='<'||matrix.get(SymbolStack.get(j).toString()+a)=='=')){
@@ -131,7 +137,7 @@ public class Operator_Precedence {
             reader = new BufferedReader(new FileReader(file));
             String tempString = null;
             while ((tempString = reader.readLine()) != null) {
-               // str.append(' ');
+                // str.append(' ');
                 str.append(tempString);
             }
             reader.close();
@@ -145,7 +151,7 @@ public class Operator_Precedence {
 
         StringBuilder input=new StringBuilder();
         input.append(readFileByLines(args[0]));
-       // System.out.println(input);
+        // System.out.println(input);
         analysis(input);
     }
 }
