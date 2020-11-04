@@ -41,10 +41,10 @@ public class Operator_Precedence {
         {
             put("++",'>');put("+*",'<');put("+(",'<');put("+)",'>');put("+i",'<');put("+#",'>');
             put("*+",'>');put("**",'>');put("*(",'<');put("*)",'>');put("*i",'<');put("*#",'>');
-            put("(+",'<');put("(*",'<');put("((",'<');put("()",'=');put("(i",'<');put("(#",'>');
+            put("(+",'<');put("(*",'<');put("((",'<');put("()",'=');put("(i",'<');put("(#",' ');
             put(")+",'>');put(")*",'>');put(")(",' ');put("))",'>');put(")i",' ');put(")#",'>');
             put("i+",'>');put("i*",'>');put("i(",' ');put("i)",'>');put("ii",' ');put("i#",'>');
-            put("#+",'<');put("#*",'<');put("#(",'<');put("#)",'<');put("#i",'<');put("##",'=');
+            put("#+",'<');put("#*",'<');put("#(",'<');put("#)",' ');put("#i",'<');put("##",' ');
         }
     };
     /* 规约 */
@@ -110,7 +110,7 @@ public class Operator_Precedence {
                         k = j + 1;
                         SymbolStack = SymbolStack.subList(0, k);
                         SymbolStack.add(N);
-                        // System.out.println(SymbolStack.toString());
+                        System.out.println(SymbolStack.toString());
                     }
 
                 }
