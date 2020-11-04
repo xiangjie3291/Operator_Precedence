@@ -81,38 +81,40 @@ public class Operator_Precedence {
             //中缀表达式，Vn一定与Vt交叉相邻，得到栈顶终结符的位置
             if(Vt.contains(SymbolStack.get(k))){
                 j=k;
-            }else if(k>=1){
+            }else{
                 j=k-1;
             }
-            while(matrix.get(SymbolStack.get(j).toString()+a)=='>'){
-                do {
-                    Q=SymbolStack.get(j);
-                    if(Vt.contains(SymbolStack.get(j-1))){
-                        j=j-1;
-                    }else{
-                        j=j-2;
-                    }
-                }while (matrix.get(SymbolStack.get(j).toString()+Q)=='>'||matrix.get(SymbolStack.get(j).toString()+Q)=='=');
-                /*规约*/
-                char N=reduce(j+1, SymbolStack);
-                if (N==0){
-                    flag=1;
-                    System.out.println("RE");
-                    break;
-                }else {
-                    System.out.println("R");
-                    k=j+1;
-                    SymbolStack=SymbolStack.subList(0, k);
-                    SymbolStack.add(N);
-                    // System.out.println(SymbolStack.toString());
-                }
-
-            }
-            if((SymbolStack.get(j)=='#'&&a=='#')||flag==1){
+            if(matrix.get(SymbolStack.get(j).toString()+a)==' '){
+                System.out.println("E");
                 break;
             }
-            if(matrix.get(SymbolStack.get(j).toString()+a)==' '){
-                System.out.println("RE");
+            if(matrix.get(SymbolStack.get(j).toString()+a)!=null) {
+                while (matrix.get(SymbolStack.get(j).toString() + a) == '>') {
+                    do {
+                        Q = SymbolStack.get(j);
+                        if (Vt.contains(SymbolStack.get(j - 1))) {
+                            j = j - 1;
+                        } else {
+                            j = j - 2;
+                        }
+                    } while (matrix.get(SymbolStack.get(j).toString() + Q) == '>' || matrix.get(SymbolStack.get(j).toString() + Q) == '=');
+                    /*规约*/
+                    char N = reduce(j + 1, SymbolStack);
+                    if (N == 0||matrix.get(SymbolStack.get(j).toString() + Q) == ' ') {
+                        flag = 1;
+                        System.out.println("RE");
+                        break;
+                    } else {
+                        System.out.println("R");
+                        k = j + 1;
+                        SymbolStack = SymbolStack.subList(0, k);
+                        SymbolStack.add(N);
+                        // System.out.println(SymbolStack.toString());
+                    }
+
+                }
+            }
+            if((SymbolStack.get(j)=='#'&&a=='#')||flag==1){
                 break;
             }
             if((matrix.get(SymbolStack.get(j).toString()+a)=='<'||matrix.get(SymbolStack.get(j).toString()+a)=='=')){
