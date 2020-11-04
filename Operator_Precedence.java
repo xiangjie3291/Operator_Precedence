@@ -111,7 +111,7 @@ public class Operator_Precedence {
                         k = j + 1;
                         SymbolStack = SymbolStack.subList(0, k);
                         SymbolStack.add(N);
-                        System.out.println(SymbolStack.toString());
+                        //  System.out.println(SymbolStack.toString());
                     }
 
                 }
