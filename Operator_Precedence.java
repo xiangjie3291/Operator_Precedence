@@ -76,7 +76,7 @@ public class Operator_Precedence {
         SymbolStack.add('#');
         while (a!='#'&&flag==0){
             a=input.charAt(i++);
-            //System.out.println("a:"+a);
+            // System.out.println("a-----"+a);
             //System.out.println("k:"+SymbolStack.get(k));
             //中缀表达式，Vn一定与Vt交叉相邻，得到栈顶终结符的位置
             if(Vt.contains(SymbolStack.get(k))){
@@ -84,15 +84,13 @@ public class Operator_Precedence {
             }else{
                 j=k-1;
             }
-            if((SymbolStack.get(k)=='+'||SymbolStack.get(k)=='*')&&((a=='+')||(a=='*'))){
+            /* 运算符之间不相邻,运算符与#不相邻 */
+            if((SymbolStack.get(k)=='+'||SymbolStack.get(k)=='*')&&((a=='+')||(a=='*')||(a=='#'))){
                 System.out.println('E');
                 break;
             }
             if(matrix.get(SymbolStack.get(j).toString()+a)!=null) {
-                if(matrix.get(SymbolStack.get(j).toString()+a)==' '){
-                    System.out.println("E");
-                    break;
-                }
+
                 while (matrix.get(SymbolStack.get(j).toString() + a) == '>') {
                     do {
                         Q = SymbolStack.get(j);
@@ -113,11 +111,14 @@ public class Operator_Precedence {
                         k = j + 1;
                         SymbolStack = SymbolStack.subList(0, k);
                         SymbolStack.add(N);
-                        //    System.out.println(SymbolStack.toString());
+                        System.out.println(SymbolStack.toString());
                     }
 
                 }
-
+                if(matrix.get(SymbolStack.get(j).toString()+a)==' '){
+                    System.out.println("E");
+                    break;
+                }
                 if((SymbolStack.get(j)=='#'&&a=='#')||flag==1){
                     break;
                 }
