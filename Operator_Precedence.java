@@ -84,11 +84,12 @@ public class Operator_Precedence {
             }else{
                 j=k-1;
             }
-            if(matrix.get(SymbolStack.get(j).toString()+a)==' '){
-                System.out.println("E");
-                break;
-            }
+
             if(matrix.get(SymbolStack.get(j).toString()+a)!=null) {
+                if(matrix.get(SymbolStack.get(j).toString()+a)==' '){
+                    System.out.println("E");
+                    break;
+                }
                 while (matrix.get(SymbolStack.get(j).toString() + a) == '>') {
                     do {
                         Q = SymbolStack.get(j);
@@ -113,18 +114,19 @@ public class Operator_Precedence {
                     }
 
                 }
-            }
-            if((SymbolStack.get(j)=='#'&&a=='#')||flag==1){
-                break;
-            }
-            if((matrix.get(SymbolStack.get(j).toString()+a)=='<'||matrix.get(SymbolStack.get(j).toString()+a)=='=')){
-                k=k+1;
-                if(SymbolStack.size()<=k){
-                    SymbolStack.add(a);
-                }else {
-                    SymbolStack.set(k, a);
+
+                if((SymbolStack.get(j)=='#'&&a=='#')||flag==1){
+                    break;
                 }
-                System.out.println("I"+a);
+                if((matrix.get(SymbolStack.get(j).toString()+a)=='<'||matrix.get(SymbolStack.get(j).toString()+a)=='=')){
+                    k=k+1;
+                    if(SymbolStack.size()<=k){
+                        SymbolStack.add(a);
+                    }else {
+                        SymbolStack.set(k, a);
+                    }
+                    System.out.println("I"+a);
+                }
             }
         }
     }
