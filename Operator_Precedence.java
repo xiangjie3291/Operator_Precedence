@@ -84,7 +84,10 @@ public class Operator_Precedence {
             }else{
                 j=k-1;
             }
-
+            if((SymbolStack.get(k)=='+'||SymbolStack.get(k)=='*')&&((a=='+')||(a=='*'))){
+                System.out.println('E');
+                break;
+            }
             if(matrix.get(SymbolStack.get(j).toString()+a)!=null) {
                 if(matrix.get(SymbolStack.get(j).toString()+a)==' '){
                     System.out.println("E");
@@ -110,7 +113,7 @@ public class Operator_Precedence {
                         k = j + 1;
                         SymbolStack = SymbolStack.subList(0, k);
                         SymbolStack.add(N);
-                        System.out.println(SymbolStack.toString());
+                        //    System.out.println(SymbolStack.toString());
                     }
 
                 }
