@@ -1,3 +1,5 @@
+import com.sun.rowset.internal.SyncResolverImpl;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -41,10 +43,10 @@ public class Operator_Precedence {
         {
             put("++",'>');put("+*",'<');put("+(",'<');put("+)",'>');put("+i",'<');put("+#",'>');
             put("*+",'>');put("**",'>');put("*(",'<');put("*)",'>');put("*i",'<');put("*#",'>');
-            put("(+",'<');put("(*",'<');put("((",' ');put("()",'=');put("(i",'<');put("(#",' ');
+            put("(+",'<');put("(*",'<');put("((",'<');put("()",'=');put("(i",'<');put("(#",'>');
             put(")+",'>');put(")*",'>');put(")(",' ');put("))",'>');put(")i",' ');put(")#",'>');
             put("i+",'>');put("i*",'>');put("i(",' ');put("i)",'>');put("ii",' ');put("i#",'>');
-            put("#+",'<');put("#*",'<');put("#(",'<');put("#)",' ');put("#i",'<');put("##",'=');
+            put("#+",'<');put("#*",'<');put("#(",'<');put("#)",'<');put("#i",'<');put("##",'=');
         }
     };
     /* 规约 */
@@ -81,12 +83,8 @@ public class Operator_Precedence {
             //中缀表达式，Vn一定与Vt交叉相邻，得到栈顶终结符的位置
             if(Vt.contains(SymbolStack.get(k))){
                 j=k;
-            }else{
+            }else if(k>=1){
                 j=k-1;
-            }
-            if(matrix.get(SymbolStack.get(j).toString()+a)==' '){
-                System.out.println("E");
-                break;
             }
             while(matrix.get(SymbolStack.get(j).toString()+a)=='>'){
                 do {
@@ -108,11 +106,15 @@ public class Operator_Precedence {
                     k=j+1;
                     SymbolStack=SymbolStack.subList(0, k);
                     SymbolStack.add(N);
-                  //  System.out.println(SymbolStack.toString());
+                    // System.out.println(SymbolStack.toString());
                 }
 
             }
             if((SymbolStack.get(j)=='#'&&a=='#')||flag==1){
+                break;
+            }
+            if(matrix.get(SymbolStack.get(j).toString()+a)==' '){
+                System.out.println("RE");
                 break;
             }
             if((matrix.get(SymbolStack.get(j).toString()+a)=='<'||matrix.get(SymbolStack.get(j).toString()+a)=='=')){
