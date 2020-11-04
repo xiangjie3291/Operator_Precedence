@@ -69,7 +69,7 @@ public class Operator_Precedence {
         char a=' ';char Q=' ';
         int i=0;
         int k=0;
-        int j=0;
+        int j;
         int flag=0;
         List<Character> SymbolStack=new ArrayList<>();
         input.append('#');
@@ -79,21 +79,15 @@ public class Operator_Precedence {
             // System.out.println("a-----"+a);
             //System.out.println("k:"+SymbolStack.get(k));
             //中缀表达式，Vn一定与Vt交叉相邻，得到栈顶终结符的位置
+            //读入属于该文法的终结符
             if (Vt.contains(a)) {
                 if (Vt.contains(SymbolStack.get(k))) {
                     j = k;
                 } else {
                     j = k - 1;
                 }
-                /* 运算符之间不相邻,运算符与#不相邻 */
-                /*
-                if ((SymbolStack.get(k) == '+' || SymbolStack.get(k) == '*') && ((a == '+') || (a == '*'))) {
-                    System.out.println('E');
-                    break;
-                }
-                */
                 if (matrix.get(SymbolStack.get(j).toString() + a) != null) {
-
+                    /* 对所有>的情况进行规约 */
                     while (matrix.get(SymbolStack.get(j).toString() + a) == '>') {
                         do {
                             Q = SymbolStack.get(j);
@@ -105,6 +99,7 @@ public class Operator_Precedence {
                         } while (matrix.get(SymbolStack.get(j).toString() + Q) == '>' || matrix.get(SymbolStack.get(j).toString() + Q) == '=');
                         /*规约*/
                         char N = reduce(j + 1, SymbolStack);
+                        //没有符合的语法或不符合优先矩阵
                         if (N == 0 || matrix.get(SymbolStack.get(j).toString() + Q) == ' ') {
                             flag = 1;
                             System.out.println("RE");
@@ -116,15 +111,17 @@ public class Operator_Precedence {
                             SymbolStack.add(N);
                             //   System.out.println(SymbolStack.toString());
                         }
-
                     }
+                    //出现不可能的情况，不符合优先矩阵
                     if (matrix.get(SymbolStack.get(j).toString() + a) == ' ') {
                         System.out.println("E");
                         break;
                     }
+                    //栈顶终结符只剩#，或分析完毕
                     if ((SymbolStack.get(j) == '#' && a == '#') || flag == 1) {
                         break;
                     }
+                    //入栈
                     if ((matrix.get(SymbolStack.get(j).toString() + a) == '<' || matrix.get(SymbolStack.get(j).toString() + a) == '=')) {
                         k = k + 1;
                         if (SymbolStack.size() <= k) {
