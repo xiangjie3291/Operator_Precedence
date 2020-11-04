@@ -35,7 +35,7 @@ public class Operator_Precedence {
     private static Set<Character> Vn = new LinkedHashSet<Character>(){
         {
             add('N');
-            add('E');add('T');add('F');
+            //add('E');add('T');add('F');
         }
     };
     /* 优先关系矩阵 */
